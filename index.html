@@ -113,10 +113,9 @@
         <input type="text" placeholder="Модель авто" id="user_emai">
         <input type="text" placeholder="Регистрационный номер" id="user_phone_number">
         <div id="error"></div>
-        <button id="upload_to_serer_img">Выложить фото на сервер</button>
-
         <div for="photo">⬇Выберите фото ниже⬇</div>
         <input type="file" id="photo" name="photo" accept="image/*">
+        <button id="upload_to_serer_img">Выложить фото на сервер</button>
     </form>
 
     <congradulations id="congradulations">
@@ -140,9 +139,6 @@
 
     UploadIMG.addEventListener("click", () => {
         document.getElementById("error").innerText = ' ';
-        document.getElementById("congradulations").style.display = "block";
-        document.getElementById("main").style.display = "none";
-        document.getElementById("form").style.display = "none";
         let name = document.getElementById("user_name").value;
         let model = document.getElementById("user_emai").value;
         let car_num = document.getElementById("user_phone_number").value;
