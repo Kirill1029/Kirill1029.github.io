@@ -67,6 +67,27 @@
             text-align: center;
         }
 
+        #congradulations {
+            display: none;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+            font-family: "Cascadia Mono";
+            font-size: 50px;
+            font-weight: 600;
+        }
+
+        h3 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+            font-family: "Cascadia Mono";
+            font-size: 20px;
+            font-weight: 400;
+        }
+
     </style>
 </head>
 <body>
@@ -78,27 +99,43 @@
     </div>
 
     <form id="form">
-        <input type="text" placeholder="Имя" id="user_name">
-        <input type="text" placeholder="Почта" id="user_emai">
-        <input type="text" placeholder="Номер телефона" id="user_phone_number">
-        <input type="image" placeholder="Выложить картинку авто" id="upload_img">
+        <input type="text" placeholder="Марка авто" id="user_name">
+        <input type="text" placeholder="Модель авто" id="user_emai">
+        <input type="text" placeholder="Регистрационный номер" id="user_phone_number">
         <button id="upload_to_serer_img">Выложить фото на сервер</button>
+
+        <div for="photo">⬇Выберите фото ниже⬇</div>
+        <input type="file" id="photo" name="photo" accept="image/*">
     </form>
+
+    <div id="congradulations">
+        <h2>Поздравляем!</h2>
+        <h3>Ваше фото отправлено админам на проверку!</h3>
+
+    </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script> let tg = window.Telegram.WebApp
     let StartUse = document.getElementById("StartUse")
     let UploadIMG = document.getElementById("upload_to_serer_img")
+    let Congrulations = document.getElementById("congradulations")
 
     StartUse.addEventListener("click", () => {
         document.getElementById("main").style.display = "none";
         document.getElementById("form").style.display = "block";
-        document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+        document.getElementById("congradulations").style.display = "none";
     })
 
     UploadIMG.addEventListener("click", () => {
-        tg.close();
+        document.getElementById("congradulations").style.display = "block";
+        document.getElementById("main").style.display = "none";
+        document.getElementById("form").style.display = "none";
     })
+
+    Congrulations.addEventListener("click", () => {
+        document.getElementById("congradulations").style.display = "block";
+    })
+
     </script>
 
 </body>

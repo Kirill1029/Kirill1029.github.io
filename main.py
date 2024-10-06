@@ -46,7 +46,7 @@ def info(message):
         bot.send_message(message.chat.id, '❌Вы не приняли наш запрос на обработку данных!❌\n \nВы должны дать согласие на обработку данных. Иначе Вы не сможете пользоваться ботом!\n \n<u><b>Напишите</b> "ПРИНЯТЬ", если вы согласны с условиями на обработку данных или мы не сможем с вами сотрудничать!</u>', parse_mode='html')
     elif message.text.lower() == 'принять':
         markup = types.ReplyKeyboardMarkup()
-        markup.add(types.KeyboardButton('Открыть Web-приложение', web_app=WebAppInfo(url='https://github.com/Kirill1029/NomeroavtoBY/blob/main/Web-app.html')))
+        markup.add(types.KeyboardButton('Открыть Web-приложение', web_app=WebAppInfo(url='https://kirill1029.github.io/')))
         bot.send_message(message.chat.id, '✅Вы приняли наш запрос на обработку данных!✅\n \n⬇ Теперь вы можете открыть наше Web-приложение ⬇\n ', parse_mode='html', reply_markup=markup)
 
 
