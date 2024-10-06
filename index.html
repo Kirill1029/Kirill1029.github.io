@@ -16,8 +16,8 @@
         }
 
         body {
-            font-family: "Cascadia Mono", Arial;
-            font-weight: 300;
+            font-family: "Cascadia Mono";
+            font-weight: 800;
             color: black;
             background: whitesmoke;
         }
@@ -51,7 +51,7 @@
             width: 200px;
             font-family: "Cascadia Mono";
             font-size: 20px;
-            font-weight: 400;
+            font-weight: 1000;
             cursor: pointer;
             transition: all 500ms ease;
             color: black;
@@ -126,9 +126,9 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script> let tg = window.Telegram.WebApp
-    let StartUse = document.getElementById("StartUse")
-    let UploadIMG = document.getElementById("upload_to_serer_img")
-    let Congrulations = document.getElementById("congradulations")
+    let StartUse = document.getElementById("StartUse");
+    let UploadIMG = document.getElementById("upload_to_serer_img");
+    let Congrulations = document.getElementById("congradulations");
     tg.expand();
 
     StartUse.addEventListener("click", () => {
@@ -142,6 +142,7 @@
         let name = document.getElementById("user_name").value;
         let model = document.getElementById("user_emai").value;
         let car_num = document.getElementById("user_phone_number").value;
+        let image = document.getElementById("photo").value;
         if(name.length < 2) {
             document.getElementById("error").innerText = 'Неверное название марки!';
             return;
@@ -154,6 +155,11 @@
             document.getElementById("error").innerText = 'Неверынй номер! Формат ввода: 1234AB-7!';
             return;
         }
+        if(image.length = 0) {
+            document.getElementById("error").innerText = 'Отсуствует фото!';
+            return;
+        }
+
 
         let data = {
             name: name,
@@ -164,6 +170,7 @@
         tg.sendData(JSON.stringify(data));
 
         tg.close();
+
     });
 
     Congrulations.addEventListener("click", () => {
