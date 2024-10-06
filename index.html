@@ -70,6 +70,7 @@
         #congradulations {
             display: none;
             text-align: center;
+            background: whitesmoke;
         }
 
         h2 {
@@ -81,11 +82,20 @@
         }
 
         h3 {
-            margin-top: 50px;
             margin-bottom: 10px;
             font-family: "Cascadia Mono";
             font-size: 20px;
             font-weight: 400;
+        }
+
+        input {
+            margin-top: 50px;
+            height: 30px;
+            width: 200px;
+            border-radius: 5px;
+            stroke: black;
+            background: whitesmoke;
+            font-family: "Cascadia Mono";
         }
 
     </style>
@@ -108,11 +118,11 @@
         <input type="file" id="photo" name="photo" accept="image/*">
     </form>
 
-    <div id="congradulations">
+    <congradulations id="congradulations">
         <h2>Поздравляем!</h2>
         <h3>Ваше фото отправлено админам на проверку!</h3>
-
-    </div>
+        <button id="one_more">Выложить ещё фото</button>
+    </congradulations>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script> let tg = window.Telegram.WebApp
@@ -124,17 +134,17 @@
         document.getElementById("main").style.display = "none";
         document.getElementById("form").style.display = "block";
         document.getElementById("congradulations").style.display = "none";
-    })
+    });
 
     UploadIMG.addEventListener("click", () => {
         document.getElementById("congradulations").style.display = "block";
         document.getElementById("main").style.display = "none";
         document.getElementById("form").style.display = "none";
-    })
+    });
 
     Congrulations.addEventListener("click", () => {
         document.getElementById("congradulations").style.display = "block";
-    })
+    });
 
     </script>
 
