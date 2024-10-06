@@ -62,6 +62,11 @@
             background: greenyellow;
         }
 
+        #form {
+            display: none;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -71,7 +76,30 @@
         <p>Добро пожаловать, в <b>Номероавто РБ🇧🇾</b>!Это — <b>единственный</b> в Беларуси Telegram-бот для <em>регистрации</em> и получения <em>информации</em> об авто и его владельца в Республике Беларусь!</p>
         <button id="StartUse">Начать использование</button>
     </div>
+
+    <form id="form">
+        <input type="text" placeholder="Имя" id="user_name">
+        <input type="text" placeholder="Почта" id="user_emai">
+        <input type="text" placeholder="Номер телефона" id="user_phone_number">
+        <input type="image" placeholder="Выложить картинку авто" id="upload_img">
+        <button id="upload_to_serer_img">Выложить фото на сервер</button>
+    </form>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script> let tg = window.Telegram.WebApp
+    let StartUse = document.getElementById("StartUse")
+    let UploadIMG = document.getElementById("upload_to_serer_img")
+
+    StartUse.addEventListener("click", () => {
+        document.getElementById("main").style.display = "none";
+        document.getElementById("form").style.display = "block";
+        document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+    })
+
+    UploadIMG.addEventListener("click", () => {
+        tg.close();
+    })
+    </script>
 
 </body>
 </html>
