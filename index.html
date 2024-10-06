@@ -112,6 +112,7 @@
         <input type="text" placeholder="Марка авто" id="user_name">
         <input type="text" placeholder="Модель авто" id="user_emai">
         <input type="text" placeholder="Регистрационный номер" id="user_phone_number">
+        <div id="error"></div>
         <button id="upload_to_serer_img">Выложить фото на сервер</button>
 
         <div for="photo">⬇Выберите фото ниже⬇</div>
@@ -129,6 +130,7 @@
     let StartUse = document.getElementById("StartUse")
     let UploadIMG = document.getElementById("upload_to_serer_img")
     let Congrulations = document.getElementById("congradulations")
+    tg.expand();
 
     StartUse.addEventListener("click", () => {
         document.getElementById("main").style.display = "none";
@@ -137,9 +139,35 @@
     });
 
     UploadIMG.addEventListener("click", () => {
+        document.getElementById("error").innerText = ' ';
         document.getElementById("congradulations").style.display = "block";
         document.getElementById("main").style.display = "none";
         document.getElementById("form").style.display = "none";
+        let name = document.getElementById("user_name").value;
+        let model = document.getElementById("user_emai").value;
+        let car_num = document.getElementById("user_phone_number").value;
+        if(name.length < 2) {
+            document.getElementById("error").innerText = 'Неверное название марки!';
+            return;
+        }
+        if(model.length < 2) {
+            document.getElementById("error").innerText = 'Неверное название модели!';
+            return;
+        }
+        if(car_num.length < 7) {
+            document.getElementById("error").innerText = 'Неверынй номер! Формат ввода: 1234AB-7!';
+            return;
+        }
+
+        let data = {
+            name: name,
+            model: model,
+            car_num: car_num
+        }
+
+        tg.sendData(JSON.stringify(data));
+
+        tg.close();
     });
 
     Congrulations.addEventListener("click", () => {
