@@ -1,11 +1,15 @@
 import webbrowser
+from sys import executable
+
 import telebot
+from aiogram import Bot, Dispatcher, executor, types
 from telebot import types
 from telebot.types import WebAppInfo
+import aiogram
 
 bot = telebot.TeleBot('7783272138:AAFH58ANX4HcKzjNR7OeY3hSEOwCt4SM3A8')
-
-
+bot2 = Bot(token='7783272138:AAFH58ANX4HcKzjNR7OeY3hSEOwCt4SM3A8')
+dp = Dispatcher(bot2)
 
 
 #Проверка фотографии
@@ -49,9 +53,13 @@ def info(message):
         markup.add(types.KeyboardButton('Открыть Web-приложение', web_app=WebAppInfo(url='https://kirill1029.github.io/')))
         bot.send_message(message.chat.id, '✅Вы приняли наш запрос на обработку данных!✅\n \n⬇ Теперь вы можете открыть наше Web-приложение ⬇\n ', parse_mode='html', reply_markup=markup)
 
+@dp.message_handler(content_types=['web_app_data'])
+async def web_app(message: types.Message):
+    await message.answer(message.web_app_data.data)
 
 bot.polling(none_stop=True)
 
+executor.start_polling(dp)
 
 
 
