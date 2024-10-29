@@ -22,6 +22,14 @@ CREATE TABLE IF NOT EXISTS "Cars" (
 	PRIMARY KEY("car_id" AUTOINCREMENT)
 )''')
 
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS "Records" (
+	"record_id"	INTEGER NOT NULL,
+	"car_id"	INTEGER NOT NULL,
+	"photo_id"	TEXT,
+	PRIMARY KEY("record_id" AUTOINCREMENT)
+);''')
+
 connection.close()
 
 def connect(func: Callable):
@@ -152,3 +160,44 @@ class Car:
         return Car(*res)
 
 
+class Record:
+    def __init__(self, record_id: int, car_id: int, photo_id: str = None):
+        self.record_id = record_id
+        self.car_id = car_id
+        self.photo_id = photo_id
+
+    @staticmethod
+    @connect
+    def find_record_by_id(record_id: int, connection: Connection):
+        cursor = connection.cursor()
+        res = cursor.execute(f"SELECT * FROM Records WHERE record_id={record_id}").fetchone()
+        if res is None:
+            return None
+        return Record(*res)
+
+    @staticmethod
+    @connect
+    def find_car_records(car_id: int, connection: Connection):
+        cursor = connection.cursor()
+        res = cursor.execute(f"SELECT * FROM Records WHERE car_id={car_id}").fetchall()
+        ans = []
+        for row in res:
+            ans.append(Record(*row))
+        return ans
+
+    @staticmethod
+    @connect
+    def add_new_record(car_id: int, photo_id: str = None, connection: Connection = None):
+        cursor = connection.cursor()
+        record_id = cursor.execute(f'SELECT COUNT(record_id) FROM Records').fetchone()[0]
+        if photo_id is None:
+            cursor.execute(f'INSERT INTO Records VALUES({record_id + 1}, {car_id}, NULL)')
+        else:
+            cursor.execute(f'INSERT INTO Records VALUES({record_id+1}, {car_id}, "{photo_id}")')
+        return Record(record_id+1, car_id, photo_id)
+
+    @connect
+    def update_photo(self, new_photo_id: str, connection: Connection):
+        cursor = connection.cursor()
+        cursor.execute(f"UPDATE Records SET photo_id='{new_photo_id}' WHERE record_id={self.record_id}")
+        self.photo_id = new_photo_id

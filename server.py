@@ -1,9 +1,13 @@
+import json
 import re
+from typing import Annotated
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, Form
 
 import db
 import base_models
+from db import Record
+
 app = FastAPI()
 
 
@@ -27,3 +31,18 @@ async def get_car_info_by_plate_number(plate_number: str):
     if car is None:
         raise HTTPException(404, "Car not found")
     return car.__dict__
+
+
+
+@app.post("/upload")
+async def upload(car_id: Annotated[int, Form()], file: UploadFile | None = None):
+    record = Record.add_new_record(car_id)
+    if file is None:
+        return record.__dict__
+    extension = file.filename.split('.')[-1]
+    file_bytes = await file.read()
+    path = "cars/"+str(record.record_id)+"."+extension
+    with open(path, 'wb') as image:
+        image.write(file_bytes)
+    record.update_photo(path)
+    return record.__dict__
