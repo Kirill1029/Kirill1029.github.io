@@ -1,0 +1,50 @@
+.input > input {
+    font-size: 3rem;
+    font-family: 'Cascadia Mono';
+    font-weight: 400;
+    width: 7ch;
+}
+.input button {
+    background: none;
+    outline: none;
+    border: none;
+    padding: 0;
+    width: 3rem;
+    height: 3rem;
+}
+.input button:disabled > svg {
+    fill: #969696;
+    stroke: #969696;
+}
+.input button[disabled="false"] > svg {
+    fill: #000000;
+    stroke: #000000;
+}
+.input button:focus > svg {
+    transform-origin: 0.9rem 0.9rem;
+   animation: search-animation 3s cubic-bezier(.17,.67,.85,.31) 1s infinite;
+}
+@keyframes search-animation {
+    0% {
+        transform: scale(1) rotateZ(0deg);
+    }
+    50% {
+        transform: scale(1) rotateZ(540deg);
+    }
+    100% {
+        transform: scale(1) rotateZ(1080deg);
+    }
+}
+
+.search {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+}
+.input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
