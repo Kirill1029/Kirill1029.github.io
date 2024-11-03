@@ -1,13 +1,22 @@
+import {
+  setCarInfo,
+  setModal,
+  setSearchStatus,
+} from "../../redux/slices/search-slice";
 import styles from "./input.module.css";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import axios from "axios";
 
 const Input = () => {
-  const searchValue = useSelector(state => state.search.value)
+  const searchValue = useSelector((state) => state.search.value);
+  const searchStatus = useSelector((state) => state.search.searchStatus);
+  const dispatch = useDispatch();
 
   let isElectro = false;
   if (searchValue.length > 0) {
-    if (searchValue[0] === 'E') {
+    if (searchValue[0] === "E") {
       isElectro = true;
     }
   }
@@ -20,7 +29,7 @@ const Input = () => {
           placeholder="1234AA3"
           readOnly={true}
           value={searchValue}
-          style={{color: 'green'}}
+          style={{ color: "green" }}
         />
       ) : (
         <input
@@ -31,7 +40,35 @@ const Input = () => {
         />
       )}
       <div className={styles.search}>
-        <button disabled={searchValue.length !== 7}>
+        <button
+          disabled={searchValue.length !== 7}
+          loading={"" + (searchStatus === "loading")}
+          onClick={() => {
+            dispatch(setSearchStatus("loading"));
+
+            axios
+              .get(
+                `http://localhost:8000/get-car-info/plate-number?plate_number=${searchValue}`
+              )
+              .then((response) => {
+                console.log(response);
+                dispatch(setCarInfo(response.data));
+                dispatch(setSearchStatus("load"));
+              })
+              .catch((error) => {
+                if (error.response.status === 404) {
+                  dispatch(setSearchStatus("searching"));
+                  dispatch(
+                    setModal({
+                      is_shown: true,
+                      title: "Машина не найдена",
+                      text: "Машина не найдена в нашей базе данных",
+                    })
+                  );
+                }
+              });
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="48"

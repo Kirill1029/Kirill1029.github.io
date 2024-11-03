@@ -1,0 +1,9 @@
+.back {
+    background: none;
+    outline: none;
+    border: none;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    font-size: 2rem;
+}

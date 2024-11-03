@@ -20,7 +20,7 @@
     fill: #000000;
     stroke: #000000;
 }
-.input button:focus > svg {
+.input button[loading="true"] > svg {
     transform-origin: 0.9rem 0.9rem;
    animation: search-animation 3s cubic-bezier(.17,.67,.85,.31) 1s infinite;
 }

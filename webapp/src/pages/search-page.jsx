@@ -8,7 +8,7 @@ function SearchPage() {
     <>
       <Header />
       <Info />
-      <Input />
+      <Input/>
       <Keyboard />
     </>
   );

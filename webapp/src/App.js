@@ -1,16 +1,28 @@
-import './App.css';
+import "./App.css";
 
-import Header from './components/header/header';
-import Info from './components/info/info';
-import Input from './components/input/input';
-import Keyboard from './components/keyboard/keyboard';
+import SearchPage from "./pages/search-page";
+import ResultPage from "./pages/result-page";
+import Modal from "./components/modal/modal";
 
-import SearchPage from './pages/search-page';
+import { useDispatch, useSelector } from "react-redux";
+import { setModal, setSearchStatus } from "./redux/slices/search-slice";
 
 function App() {
+  const status = useSelector((state) => state.search.status);
+  const modal = useSelector((state) => state.search.modal);
+
+  const dispatch = useDispatch();
+
   return (
     <div className="App">
-      <SearchPage/>
+      <Modal
+        modal={modal}
+        setModal={(val) => {
+          dispatch(setModal(val));
+        }}
+      />
+      {(status === "searching" || status === "loading") && <SearchPage />}
+      {status === "load" && <ResultPage />}
     </div>
   );
 }
