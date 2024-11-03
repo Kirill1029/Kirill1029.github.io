@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta  http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nomeroavto BY🇧🇾</title>
+    <style>
+        @import url(https://myfonts.ru/myfonts?fonts=cascadia-mono);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Cascadia Mono";
+            font-weight: 800;
+            color: black;
+            background: whitesmoke;
+        }
+
+        #main {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 70px;
+            margin: 30px auto;
+        }
+
+        p {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+        button {
+            border: 0;
+            border-radius: 5px;
+            margin-top: 50px;
+            height: 60px;
+            width: 200px;
+            font-family: "Cascadia Mono";
+            font-size: 20px;
+            font-weight: 1000;
+            cursor: pointer;
+            transition: all 500ms ease;
+            color: black;
+            background: whitesmoke;
+        }
+
+        button:hover {
+            background: greenyellow;
+        }
+
+        #form {
+            display: none;
+            text-align: center;
+        }
+
+        #congradulations {
+            display: none;
+            text-align: center;
+            background: whitesmoke;
+        }
+
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+            font-family: "Cascadia Mono";
+            font-size: 50px;
+            font-weight: 600;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+            font-family: "Cascadia Mono";
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        input {
+            margin-top: 50px;
+            height: 30px;
+            width: 200px;
+            border-radius: 5px;
+            stroke: black;
+            background: whitesmoke;
+            font-family: "Cascadia Mono";
+        }
+
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>Номероавто РБ🇧🇾</h1>
+        <img src="media/LogoProgramm.png">
+        <p>Добро пожаловать, в <b>Номероавто РБ🇧🇾</b>!Это — <b>единственный</b> в Беларуси Telegram-бот для <em>регистрации</em> и получения <em>информации</em> об авто и его владельца в Республике Беларусь!</p>
+        <button id="StartUse">Начать использование</button>
+    </div>
+
+    <form id="form">
+        <input type="text" placeholder="Марка авто" id="user_name">
+        <input type="text" placeholder="Модель авто" id="user_emai">
+        <input type="text" placeholder="Регистрационный номер" id="user_phone_number">
+        <div id="error"></div>
+        <div for="photo">⬇Выберите фото ниже⬇</div>
+        <input type="file" id="photo" name="photo" accept="image/*">
+        <button id="upload_to_serer_img">Выложить фото на сервер</button>
+    </form>
+
+    <congradulations id="congradulations">
+        <h2>Поздравляем!</h2>
+        <h3>Ваше фото отправлено админам на проверку!</h3>
+        <button id="one_more">Выложить ещё фото</button>
+    </congradulations>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script> let tg = window.Telegram.WebApp
+    let StartUse = document.getElementById("StartUse");
+    let UploadIMG = document.getElementById("upload_to_serer_img");
+    let Congrulations = document.getElementById("congradulations");
+    tg.expand();
+
+    StartUse.addEventListener("click", () => {
+        document.getElementById("main").style.display = "none";
+        document.getElementById("form").style.display = "block";
+        document.getElementById("congradulations").style.display = "none";
+    });
+
+    UploadIMG.addEventListener("click", () => {
+        document.getElementById("error").innerText = ' ';
+        let name = document.getElementById("user_name").value;
+        let model = document.getElementById("user_emai").value;
+        let car_num = document.getElementById("user_phone_number").value;
+        let image = document.getElementById("photo").value;
+        if(name.length < 2) {
+            document.getElementById("error").innerText = 'Неверное название марки!';
+            return;
+        }
+        if(model.length < 2) {
+            document.getElementById("error").innerText = 'Неверное название модели!';
+            return;
+        }
+        if(car_num.length < 7) {
+            document.getElementById("error").innerText = 'Неверынй номер! Формат ввода: 1234AB-7!';
+            return;
+        }
+        if(image.length = 0) {
+            document.getElementById("error").innerText = 'Отсуствует фото!';
+            return;
+        }
+
+
+        let data = {
+            name: name,
+            model: model,
+            car_num: car_num
+        }
+
+        tg.sendData(JSON.stringify(data));
+
+        tg.close();
+
+    });
+
+    Congrulations.addEventListener("click", () => {
+        document.getElementById("congradulations").style.display = "block";
+    });
+
+    </script>
+
+</body>
+</html>
